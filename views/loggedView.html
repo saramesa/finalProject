@@ -1,0 +1,55 @@
+<div class="top-content">
+	<div class="inner-bg">
+		<div class="container">   
+			<div class="row">
+				<div class="col-sm-5">
+					<div class="form-box">
+						<div class="form-top">
+							<div class="form-top-left">
+								<h3>New Bar:</h3>
+							</div>
+						</div>
+						<div class="form-bottom">
+							<form role="form" action="" method="post" class="login-form">
+								<div class="form-group">
+									<label class="sr-only" for="userEmail">Name</label>
+									<input type="text" name="userEmail" placeholder="Name" class="form-username form-control" id="barName">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="userPass">Address</label>
+									<input type="text" name="userPass" placeholder="Address" class="form-password form-control" id="barAddress">
+								</div>				                       
+								<a href="#/bars" ng-click="addNewBar()" class="btn btn-primary">Add New Bar!</a>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-1 middle-border"></div>
+				<div class="col-sm-1"></div>
+				<div class="col-sm-5">
+					<div class="form-box">
+						<div class="form-top">
+							<div class="form-top-left">
+								<h3>New Artist:</h3>
+							</div>
+						</div>
+						<div class="form-bottom">
+							<form>
+								<div class="form-group">
+									<label class="sr-only" for="userName">Name</label>
+									<input type="text" name="userName" class="form-first-name form-control" id="artistName" placeholder="Enter Name..." required>
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="userEmail">Type of Music</label>
+									<input type="text" name="userEmail" placeholder="Type of Music" class="form-email form-control" id="artistTypeMusic">
+								</div>
+								<div class="form-group">
+									<label class="sr-only" for="userPass">Type of musician</label>
+									<input type="text" name="userPass" placeholder="Group or solist?" class="form-email form-control" id="artistTypeMusician" required>
+								</div>
+								<a href="#/home" ng-click="addNewArtist()" class="btn btn-primary">Add New Artist!</a>
+							</form>
+						</div>
+					</div>
+				</div>

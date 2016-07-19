@@ -1,0 +1,19 @@
+<div class="container containerStyle" ng-controller="ExampleController">
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline text-center">
+				<div class="form-group">
+					<label class="sr-only" for="userEmail">Email address</label>
+					<input type="email" class="form-control" id="userEmail" placeholder="Enter email" required>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="userPass">Password</label>
+					<input type="password" class="form-control" id="userPass" placeholder="Password" required>
+					<label class="sr-only" for="typeOfUser">Type of User</label>
+					<input type="text" class="form-control" id="typeOfUser" placeholder="Type of User" required>
+				</div>
+				<a href="#/register" ng-click="save()" class="btn btn-primary buttonStyle">Sign in</a>
+			</form>
+		</div>
+	</div>
+</div>
