@@ -1,0 +1,22 @@
+<!--First row-->
+<div class="row" ng-controller="eachArtistController" ng-repeat="bar in bars | toArray | filter:{name:name}">
+
+
+    <!--Featured image-->
+    <hr class="extra-margin">
+    <div class="col-md-7">
+        <div class="view overlay hm-white-light z-depth-1-half">
+            <img src="{{bar.photo}}" class="img-fluid" alt="">
+            <div class="mask"></div>
+        </div>
+    </div>
+    <!--/.Featured image-->
+
+    <!--Post excerpt-->   
+    <div class="col-md-5">
+        <a href="#!"><h2 class="post-title">{{bar.name}}</h2></a>
+        <p class="lead">Name: {{bar.name}}</p>
+        <p class="lead">Address: {{bar.address}}</p>
+    </div>
+    <!--/.Post excerpt-->
+</div>

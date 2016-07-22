@@ -1,0 +1,32 @@
+<!--Page heading-->
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1-responsive">{{user.name}}'s profile
+        </h1>
+    </div>
+</div>
+<!--/.Page heading-->
+
+
+<!--First row-->
+<div class="row">
+    <!--Featured image-->
+    <hr class="extra-margin">
+    <div class="col-md-7">
+        <div class="view overlay hm-white-light z-depth-1-half">
+            <img src="" class="img-fluid" alt="">
+            <div class="mask"></div>
+        </div>
+    </div>
+    <!--/.Featured image-->
+
+    <!--Post excerpt-->   
+    <div class="col-md-5">
+        <a href="#!"><h2 class="post-title">{{user.name}}</h2></a>
+        <p class="lead">Email: {{user.email}}</p>
+        <p class="lead">Role: {{user.role}}</p>
+    </div>
+    <!--/.Post excerpt-->
+</div>
+
+<button id="addNewEvent">Add new event!</button>

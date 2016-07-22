@@ -1,19 +1,11 @@
-<!--Page heading-->
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="h1-responsive">ARTISTS</h1>
-    </div>
-</div>
-<!--/.Page heading-->
-
-
 <!--First row-->
-<div class="row" ng-repeat="artist in artists">
+<div class="row" ng-controller="eachArtistController" ng-repeat="artist in artists | toArray | filter:{name:name}">
+
     <!--Featured image-->
     <hr class="extra-margin">
     <div class="col-md-7">
         <div class="view overlay hm-white-light z-depth-1-half">
-            <img src="{{artist.photo}}" class="img-fluid" alt="artistPhoto">
+            <img src="{{artist.photo}}" class="img-fluid" alt="">
             <div class="mask"></div>
         </div>
     </div>
@@ -21,13 +13,10 @@
 
     <!--Post excerpt-->   
     <div class="col-md-5">
-        <h2 class="post-title">{{artist.name}}</h2></a>
+        <a href="#!"><h2 class="post-title">{{artist.name}}</h2></a>
         <p class="lead">Name: {{artist.name}}</p>
         <p class="lead">Type of music: {{artist.typemusic}}</p>
         <p class="lead">Type of band: {{artist.typeband}}</p>
-        <div class="read-more">
-            <a ng-click = "myFilter = {name:name}" href="#/artist/{{artist.name}}" class="btn btn-primary">Learn more</a>
-        </div>
     </div>
     <!--/.Post excerpt-->
 </div>

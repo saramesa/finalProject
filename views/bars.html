@@ -1,20 +1,31 @@
-<p>BARS</p>
-<!-- <div ng-repeat="name in bars | favoriteFilter:favorites" class="item-thumbnail-left">
-        <img ng-src="{{baseURL+dish.image}}" on-swipe-left="deleteFavorite(dish.id)">
-        <h2>{{dish.name}}
-        </div> -->
+<!--Page heading-->
+<div class="row">
+        <div class="col-md-12">
+            <h1 class="h1-responsive">BARS</h1>
+</div>
+</div>
+<!--/.Page heading-->
 
-
-
-        <div class="row">
-
-        	<div  ng-repeat="bar in bars">
-        		<div class="card fullCardProduct">     
-        			<div class="card-content">
-
-        			</div>
-        		</div>
-        	</div>
-
+<!--First row-->
+<div class="row" ng-repeat="bar in bars">
+        <!--Featured image-->
+        <hr class="extra-margin">
+        <div class="col-md-7">
+            <div class="view overlay hm-white-light z-depth-1-half">
+                <img src="{{bar.photo}}" class="img-fluid" alt="">
+                <div class="mask"></div>
         </div>
+</div>
+<!--/.Featured image-->
 
+<!--Post excerpt-->   
+<div class="col-md-5">
+     <h2 class="post-title">{{bar.name}}</h2></a>
+        <p class="lead">Name: {{bar.name}}</p>
+        <p class="lead">Address: {{bar.address}}</p>
+    <div class="read-more">
+        <a ng-click = "myFilter = {name:name}" href="#/bar/{{bar.name}}" class="btn btn-primary">Learn more</a>
+</div>
+</div>
+<!--/.Post excerpt-->
+</div>

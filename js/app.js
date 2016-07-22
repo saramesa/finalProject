@@ -1,10 +1,5 @@
 //ANGULAR
-var app = angular.module('project', ['ngRoute', 'ngStorage']);
-
-app.controller('HomeViewController', ['$scope', function($scope) {
-	$scope.appTittle = 'Simple Expenses Tracker';
-}]);
-
+var app = angular.module('project', ['ngRoute', 'ngStorage', 'ui.bootstrap', 'angular-toArrayFilter']);
 
 
 app.config(['$routeProvider', function($routeProvider) {
@@ -15,11 +10,11 @@ app.config(['$routeProvider', function($routeProvider) {
 	})
 	.when('/bars', {	
 		templateUrl: 'views/bars.html',
-		controller: 'HomeViewController'
+		controller: 'FilterController'
 	})
 	.when('/artists', {	
 		templateUrl: 'views/artists.html',
-		controller: 'HomeViewController'
+		controller: 'FilterController'
 	})
 	.when('/signin', {	
 		templateUrl: 'views/form.html',
@@ -33,13 +28,34 @@ app.config(['$routeProvider', function($routeProvider) {
 		templateUrl: 'views/loggedView.html',
 		controller: 'RegisterController'
 	})
+	.when('/profileView', {
+		templateUrl: 'views/profileView.html',
+		controller: 'ProfileController'
+	})
+	.when('/artist/:name', {
+		templateUrl: 'views/eachArtistView.html',
+		controller: 'eachArtistController'
+	})
+	.when('/bar/:name', {
+		templateUrl: 'views/eachBarView.html',
+		controller: 'eachArtistController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	})
 }])
 
 
+
+
+/*CONTROLADORES*/
+
 // utilizar $.localstorage (para refactorizar el código)
+app.controller('HomeViewController', ['$scope', function($scope) {
+	
+}]);
+
+
 app.controller("RegisterController", function($scope, $localStorage, $sessionStorage, $location) {
 
 	$scope.save = function() {
@@ -97,52 +113,146 @@ app.controller("RegisterController", function($scope, $localStorage, $sessionSto
 
 
 
-	$scope.addNewBar = function() {
-		var barName = $("#barName").val();
-		var barAddress = $("#barAddress").val();
+		$scope.addNewBar = function() {
+			var barName = $("#barName").val();
+			var barAddress = $("#barAddress").val();
+			var barPhoto = $("#barPhoto").val();
+			var barPhone = $("#barPhone").val();
 
-		var bar = {}
-		bar["name"]= barName;
-		bar["address"] = barAddress;
-		
-		var storedBars = JSON.parse(window.localStorage.getItem('ngStorage-bars')) || {};
-		storedBars[name] = bar;
-		$localStorage.bar = storedBars;
-	}
+			var bar = {}
+			bar["name"]= barName;
+			bar["address"] = barAddress;
+			bar["photo"] = barPhoto;
+			bar["phone"] = barPhone;
 
-
-
-	$scope.addNewArtist = function() {
-		var artistName = $("#artistName").val();
-		var artistTypeMusic = $("#artistTypeMusic").val();
-		var artistTypeMusician = $("#artistTypeMusician").val();
-
-		var artist = {}
-		artist["name"]= artistName;
-		artist["typemusic"] = artistTypeMusic;
-		artist["typeband"] = artistTypeMusician;
-		
-		var storedArtists = JSON.parse(window.localStorage.getItem('ngStorage-artists')) || {};
-		storedArtists[name] = artist;
-		$localStorage.artist = storedArtists;
-	}
+			var storedBars = JSON.parse(window.localStorage.getItem('ngStorage-bar')) || {};
+			storedBars[barName] = bar;
+			$localStorage.bar = storedBars;
+		}
 
 
 
+		$scope.addNewArtist = function() {
+			var artistName = $("#artistName").val();
+			var artistTypeMusic = $("#artistTypeMusic").val();
+			var artistTypeMusician = $("#artistTypeMusician").val();
+			var artistPhoto = $("#artistPhoto").val();
 
+			var artist = {}
+			artist["name"]= artistName;
+			artist["typemusic"] = artistTypeMusic;
+			artist["typeband"] = artistTypeMusician;
+			artist["photo"] = artistPhoto;
 
+			var storedArtists = JSON.parse(window.localStorage.getItem('ngStorage-artist')) || {};
+			storedArtists[artistName] = artist;
+			$localStorage.artist = storedArtists;
+		}
 /*$scope.load = function() {
 		$scope.data = $localStorage.user;
 	}*/
+});
+
+
+app.controller('FilterController', ['$scope', '$routeParams', function($scope, $routeParams){
+	$scope.name = $routeParams.name;
+	$scope.artists = JSON.parse(window.localStorage.getItem('ngStorage-artist'));
+	$scope.bars = JSON.parse(window.localStorage.getItem('ngStorage-bar'));
+}]);
+
+
+/*controlador profilecontroller hacer*/
+
+app.controller('ProfileController', ['$scope', '$routeParams', '$localStorage', '$sessionStorage', '$location', function($scope, $routeParams, $localStorage, $sessionStorage, $location) {
+	$scope.name = $routeParams.name;
+	$scope.currentUser = $sessionStorage.currentUser;
+	$scope.user = $localStorage.user[$scope.currentUser];
 	
+	if($scope.user){
+		$location.url("/profileView")
+	}else {
+		$location.url("/register")
+	}
+
+}]);
+
+
+app.controller('eachArtistController', ['$scope', '$routeParams', function($scope, $routeParams) {
+	$scope.name = $routeParams.name;
+	var currentArtist = JSON.parse(window.localStorage.getItem('ngStorage-artist'));
+	var currentBar = JSON.parse(window.localStorage.getItem('ngStorage-bar'));
+	$scope.artists = currentArtist;
+	$scope.bars = currentBar;
+}]);
 
 
 
 
+app.controller('DatepickerCtrl', function ($scope) {
+	$scope.today = function() {
+		$scope.dt = new Date();
+	};
+	$scope.today();
 
+	$scope.clear = function() {
+		$scope.dt = null;
+	};
 
+	$scope.options = {
+		customClass: getDayClass,
+		minDate: new Date(),
+		showWeeks: true
+	};
 
+  // Disable weekend selection
+  function disabled(data) {
+  	var date = data.date,
+  	mode = data.mode;
+  	return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  }
 
+  $scope.toggleMin = function() {
+  	$scope.options.minDate = $scope.options.minDate ? null : new Date();
+  };
+
+  $scope.toggleMin();
+
+  $scope.setDate = function(year, month, day) {
+  	$scope.dt = new Date(year, month, day);
+  };
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var afterTomorrow = new Date(tomorrow);
+  afterTomorrow.setDate(tomorrow.getDate() + 1);
+  $scope.events = [
+  {
+  	date: tomorrow,
+  	status: 'full'
+  },
+  {
+  	date: afterTomorrow,
+  	status: 'partially'
+  }
+  ];
+
+  function getDayClass(data) {
+  	var date = data.date,
+  	mode = data.mode;
+  	if (mode === 'day') {
+  		var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+  		for (var i = 0; i < $scope.events.length; i++) {
+  			var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+  			if (dayToCheck === currentDay) {
+  				return $scope.events[i].status;
+  			}
+  		}
+  	}
+
+  	return '';
+  }
 });
 
 
@@ -158,32 +268,3 @@ app.controller("RegisterController", function($scope, $localStorage, $sessionSto
 
 
 
-
-
-
-
-
-/*
-app.filter('favoriteFilter', 'localStorage', function (localStorage) {
-
-	if(localStorage.getItem('favorites')!=undefined)
-	{
-		var out = [];
-		return out;
-	}
-	else{
-		return function (dishes) {
-			var old_favorite = JSON.parse($localStorage.get('favorites'));
-			var leng = Object.keys(old_favorite).length;
-			console.log(leng);
-
-			var out = [];
-			for (var i = 0; i < leng; i++) {
-				for (var j = 0; j < dishes.length; j++) {
-					if (dishes[j].id === favorites[i].id)
-						out.push(dishes[j]);
-				}
-			}
-			return out;
-		}}
-	});*/
